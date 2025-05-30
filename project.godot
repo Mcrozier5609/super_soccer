@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 KeyUtiles="*res://utils/key_utiles.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/viewport_width=280
