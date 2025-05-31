@@ -16,7 +16,6 @@ func _process(delta: float) -> void:
 	var extra_x = 0
 	var extra_y = 0
 	carry_time += delta
-	print(carry_time)
 
 	if carrier.velocity != Vector2.ZERO:
 		if carrier.velocity.x != 0:
