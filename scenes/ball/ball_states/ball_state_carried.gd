@@ -24,7 +24,6 @@ func _process(delta: float) -> void:
 			extra_y = (sin(carry_time * DRIBBLE_SPEED) * DRIBBLE_MAGNITUDE) + DRIBBLE_OFFSET
 			if carrier.velocity.y < 0:
 				extra_y = -extra_y - 2
-
 		if carrier.heading.x >= 0:
 			animation_player.play('roll')
 			animation_player.advance(0)
@@ -32,10 +31,9 @@ func _process(delta: float) -> void:
 			extra_x = -extra_x
 			animation_player.play_backwards('roll')
 			animation_player.advance(0)
-		
-
 	else:
 		animation_player.play('idle')
 	var offset_position = Vector2(carrier.heading.x * OFFSET_FROM_PLAYER.x, OFFSET_FROM_PLAYER.y)
 	var extra_offset = Vector2(extra_x, extra_y).normalized() * max(abs(extra_x), abs(extra_y))
+	process_gravity(delta)
 	ball.position = carrier.position + offset_position + extra_offset
