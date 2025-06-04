@@ -122,5 +122,3 @@ control_scheme = 2
 
 [node name="ball" parent="ActorsContainer" instance=ExtResource("5_71j4m")]
 position = Vector2(191, 115)
-friction_air = 35.0
-friction_ground = 250.0
