@@ -6,7 +6,7 @@ const CONTROL_SCHEME_MAP : Dictionary = {
 	ControlScheme.P1: preload("res://assets/art/props/1p.png"),
 	ControlScheme.P2: preload("res://assets/art/props/2p.png"),
 }
-const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAD", "GERMANY", "ITALY", "SPAIN", "USA"]
+const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAD", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA"]
 const GRAVITY := 8.0
 const BALL_CONTROL_HEIGHT_MAX := 10.0
 

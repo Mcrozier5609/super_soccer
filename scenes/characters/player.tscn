@@ -5,13 +5,13 @@
 [ext_resource type="Shader" uid="uid://bu8qh6e4y5db2" path="res://shaders/replace_color.gdshader" id="2_atpat"]
 [ext_resource type="Texture2D" uid="uid://bjbm4udqlxlvf" path="res://assets/art/palettes/skin-colors-palette.png" id="3_6eyoc"]
 [ext_resource type="Texture2D" uid="uid://d0sevtclmrn4j" path="res://assets/art/props/1p.png" id="3_dyp2m"]
-[ext_resource type="Texture2D" uid="uid://bvcivm18jxqfq" path="res://assets/art/palettes/teams-color-palette.png" id="3_kqtwu"]
+[ext_resource type="Texture2D" uid="uid://8o7d86icpvl2" path="res://assets/art/palettes/teams-color-palette-new.png" id="4_6eyoc"]
 [ext_resource type="Texture2D" uid="uid://chsgtbtv3jeyp" path="res://assets/art/characters/player-shadow.png" id="4_atpat"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kqtwu"]
 resource_local_to_scene = true
 shader = ExtResource("2_atpat")
-shader_parameter/team_palette = ExtResource("3_kqtwu")
+shader_parameter/team_palette = ExtResource("4_6eyoc")
 shader_parameter/skin_palette = ExtResource("3_6eyoc")
 shader_parameter/team_color = 0
 shader_parameter/skin_color = 0
