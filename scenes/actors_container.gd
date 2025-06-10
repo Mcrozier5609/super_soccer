@@ -25,7 +25,7 @@ func _ready() -> void:
 	player.control_scheme = Player.ControlScheme.P1
 	player.set_control_texture()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() - time_since_last_cache_refresh > DURATION_WEIGHT_CACHE:
 		time_since_last_cache_refresh = Time.get_ticks_msec()
 		set_on_duty_weights()
