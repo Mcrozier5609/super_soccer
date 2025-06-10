@@ -24,6 +24,5 @@ func _process(delta: float) -> void:
 		if shot_direction == Vector2.ZERO:
 			shot_direction = initial_shot_direction
 		shot_direction = shot_direction.normalized()
-		print(shot_direction)
 		var data = PlayerStateData.build().set_shot_power(shot_power).set_shot_direction(shot_direction)
 		transition_state(Player.State.SHOOTING, data)
