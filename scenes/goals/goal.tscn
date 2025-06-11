@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhk81yh8okb26"]
+[gd_scene load_steps=8 format=3 uid="uid://bhk81yh8okb26"]
 
 [ext_resource type="Texture2D" uid="uid://jobjqfw0vdo6" path="res://assets/art/backgrounds/goal-bottom.png" id="1_e45id"]
 [ext_resource type="Script" uid="uid://gu86s4vk0oti" path="res://scenes/goals/goal.gd" id="1_m61db"]
@@ -9,6 +9,12 @@ size = Vector2(26, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t0mi"]
 size = Vector2(26, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6yncu"]
+size = Vector2(6, 65)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1286"]
+size = Vector2(6, 65)
 
 [node name="Goal" type="Node2D"]
 y_sort_enabled = true
@@ -59,3 +65,22 @@ position = Vector2(21, -35)
 
 [node name="BottomTarget" type="Node2D" parent="Targets"]
 position = Vector2(20, -10)
+
+[node name="InvisibleWalls" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls"]
+position = Vector2(15, -34)
+rotation = 0.139626
+shape = SubResource("RectangleShape2D_6yncu")
+
+[node name="ScoringArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoringArea"]
+position = Vector2(0, -34)
+rotation = 0.139626
+shape = SubResource("RectangleShape2D_y1286")
