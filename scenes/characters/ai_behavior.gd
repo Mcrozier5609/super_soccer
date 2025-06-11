@@ -5,7 +5,7 @@ const DURATION_AI_TICK_FREQUENCY := 200
 const SPREAD_ASSIST_FACTOR := 0.8
 const SHOT_DISTNACE := 150
 const SHOT_PROBABILITY := 30
-const TACKLE_DISTANCE := 15
+const TACKLE_DISTANCE := 10
 const TACKLE_PROBABILITY := 0.3
 
 var ball : Ball = null
@@ -30,15 +30,16 @@ func perform_ai_movement() -> void:
 	if player.has_ball():
 		total_steering_force += get_carrier_steering_force()
 	elif player.role != Player.Role.GOALIE:
-		total_steering_force += get_on_duty_steering_force()
 		if is_ball_carried_by_teammate():
 			total_steering_force += get_assist_formation_steering()
+		else:
+			total_steering_force += get_on_duty_steering_force()
 	total_steering_force = total_steering_force.limit_length(1.0)
 	player.velocity = total_steering_force * player.speed
 
 func perform_ai_decisions() -> void:
 	if is_ball_possessed_by_opponents() \
-	and player.position.distance_to(ball.position) < TACKLE_DISTANCE and randf() < TACKLE_PROBABILITY:
+	and player.position.distance_to(ball.carrier.position) < TACKLE_DISTANCE and randf() < TACKLE_PROBABILITY:
 		player.switch_states(Player.State.TACKLING)
 	if ball.carrier == player:
 		var target := player.target_goal.get_center_target_position()

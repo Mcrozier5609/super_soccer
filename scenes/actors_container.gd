@@ -54,7 +54,7 @@ func set_on_duty_weights() -> void:
 			func(p: Player): return p.control_scheme == Player.ControlScheme.CPU and p.role != Player.Role.GOALIE
 		)
 		cpu_players.sort_custom(func(p1: Player, p2: Player):
-			return p1.spawn_position.distance_squared_to(ball.position) < p2.spawn_position.distance_squared_to(ball.position))
+			return p1.position.distance_squared_to(ball.position) < p2.position.distance_squared_to(ball.position))
 
 		for i in range(cpu_players.size()):
 			cpu_players[i].weight_on_duty_steering = 1 - ease(float(i)/10.0, 0.1)

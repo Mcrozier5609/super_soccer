@@ -20,14 +20,19 @@ func handle_human_movement() -> void:
 			transition_state(Player.State.PREPPING_SHOT)
 		elif KeyUtiles.is_action_just_press(player.control_scheme, KeyUtiles.Action.PASS):
 			transition_state(Player.State.PASSING)
-	elif ball.can_air_interact() and KeyUtiles.is_action_just_press(player.control_scheme, KeyUtiles.Action.SHOOT):
-		if player.velocity == Vector2.ZERO:
-			if player.is_facing_target_goal():
-				transition_state(Player.State.VOLLEY_KICK)
-			else:
-				transition_state(Player.State.BICYCLE_KICK)
+	else:
+		var is_ball_carried_by_teammate := ball.carrier != null and ball.carrier != player and \
+										   ball.carrier.country == player.country
+		if is_ball_carried_by_teammate:
+			if ball.can_air_interact() and KeyUtiles.is_action_just_press(player.control_scheme, KeyUtiles.Action.SHOOT):
+				if player.velocity == Vector2.ZERO:
+					if player.is_facing_target_goal():
+						transition_state(Player.State.VOLLEY_KICK)
+					else:
+						transition_state(Player.State.BICYCLE_KICK)
+				else:
+					transition_state(Player.State.HEADER)
 		else:
-			transition_state(Player.State.HEADER)
-
-	if player.velocity != Vector2.ZERO and KeyUtiles.is_action_just_press(player.control_scheme, KeyUtiles.Action.SHOOT):
-		state_transition_requested.emit(Player.State.TACKLING)
+			if player.velocity != Vector2.ZERO \
+			and KeyUtiles.is_action_just_press(player.control_scheme, KeyUtiles.Action.SHOOT):
+				state_transition_requested.emit(Player.State.TACKLING)
