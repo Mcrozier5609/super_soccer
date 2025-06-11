@@ -30,6 +30,7 @@ enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEAD
 @onready var player_sprite: Sprite2D = %player_sprite
 @onready var tackle_damage_emitter_area : Area2D = %TackleDamageEmiiterArea
 @onready var control_sprite: Sprite2D = %ControlSprite
+@onready var opponent_detection_area: Area2D = %OpponentDetectionArea
 
 var ai_behavior : AIBehavior = AIBehavior.new()
 var country := ""
@@ -79,7 +80,7 @@ func initialize(context_position: Vector2, context_ball: Ball, context_own_goal:
 	country = context_country
 
 func setup_ai_behavior() -> void:
-	ai_behavior.setup(self, ball)
+	ai_behavior.setup(self, ball, opponent_detection_area)
 	ai_behavior.name = "AI Behavior"
 	add_child(ai_behavior)
 
@@ -120,9 +121,11 @@ func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		player_sprite.flip_h = false
 		tackle_damage_emitter_area.scale.x = 1
+		opponent_detection_area.scale.x = 1
 	elif heading == Vector2.LEFT:
 		player_sprite.flip_h = true
 		tackle_damage_emitter_area.scale.x = -1
+		opponent_detection_area.scale.x = -1
 
 func set_sprite_visibility() -> void:
 	control_sprite.visible = has_ball() or not control_scheme == ControlScheme.CPU

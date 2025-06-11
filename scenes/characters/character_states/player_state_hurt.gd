@@ -11,7 +11,7 @@ var time_start_hurt := Time.get_ticks_msec()
 func _enter_tree() -> void:
 	animation_player.play("hurt")
 	time_start_hurt = Time.get_ticks_msec()
-	player.height = 1.0
+	player.height = 0.01
 	player.height_velocity = HURT_HEIGHT_VELOCITY
 	if ball.carrier == player:
 		ball.tumble(state_data.hurt_direction * BALL_TUMBLE_SPEED)
