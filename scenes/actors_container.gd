@@ -91,6 +91,10 @@ func check_for_kickoff_readiness() -> void:
 	GameEvents.kickoff_ready.emit()
 
 func setup_control_schemes() -> void:
+	for home_player in squad_home:
+		home_player.set_control_scheme(Player.ControlScheme.CPU)
+	for away_player in squad_away:
+		away_player.set_control_scheme(Player.ControlScheme.CPU)
 	var p1_country := GameManager.player_setup[0]
 	if GameManager.is_coop():
 		var player_squad := squad_home if squad_home[0].country == p1_country else squad_away

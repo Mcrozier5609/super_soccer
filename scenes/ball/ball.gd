@@ -64,8 +64,6 @@ func pass_to(destination: Vector2, lock_duration: int = PASS_INTANGIBILITY_DURAT
 	if distance > DISTANCE_HIGH_PASS:
 		height_velocity = BallState.GRAVITY * distance / (1.85 * intensity)
 	carrier = null
-	print("ball velocity")
-	print(velocity)
 	switch_state(Ball.State.FREEFORM, BallStateData.build().set_ball_intangibility(lock_duration))
 
 func stop() -> void:

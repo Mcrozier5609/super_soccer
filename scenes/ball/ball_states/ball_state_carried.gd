@@ -11,6 +11,7 @@ const DRIBBLE_OFFSET := 2
 
 func _enter_tree() -> void:
 	assert(carrier != null)
+	GameEvents.ball_possessed.emit(carrier.fullname)
 
 func _process(delta: float) -> void:
 	var extra_x = 0
@@ -37,3 +38,6 @@ func _process(delta: float) -> void:
 	var extra_offset = Vector2(extra_x, extra_y).normalized() * max(abs(extra_x), abs(extra_y))
 	process_gravity(delta)
 	ball.position = carrier.position + offset_position + extra_offset
+
+func _exit_tree() -> void:
+	GameEvents.ball_released.emit()

@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-KeyUtiles="*res://utils/key_utiles.gd"
 DataLoader="*res://utils/data_loader.gd"
 GameEvents="*res://scenes/game_events.gd"
 GameManager="*res://scenes/game_manager/game_manager.gd"
@@ -34,6 +33,11 @@ window/size/window_width_override=1400
 window/size/window_height_override=900
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/custom="uid://qwns2ls41ind"
+theme/custom_font="uid://ddlne4ancy4s8"
 
 [input]
 
