@@ -37,10 +37,6 @@ func is_ball_carried_by_teammate() -> bool:
 func is_ball_possessed_by_opponents() -> bool:
 	return ball.carrier != null and ball.carrier.country != player.country
 
-func face_towards_target_goal() -> void:
-	if not player.is_facing_target_goal():
-		player.heading = player.heading * -1
-
 func has_opponents_nearby() -> bool:
 	var players := opponent_detection_area.get_overlapping_bodies()
 	return players.find_custom(func(p: Player): return p.country != player.country) > -1

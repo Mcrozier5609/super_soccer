@@ -17,7 +17,7 @@ enum ControlScheme {CPU, P1, P2}
 enum Role {GOALIE, DEFENSE, MIDFIELD, OFFENSE}
 enum SkinColor {LIGHT, MEDIUM, DARK}
 enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEADER, VOLLEY_KICK, BICYCLE_KICK,
-			CHEST_CONTROL, HURT, DIVING, CELEBRATING, MOURNING}
+			CHEST_CONTROL, HURT, DIVING, CELEBRATING, MOURNING, RESETTING}
 
 @export var ball : Ball
 @export var control_scheme: ControlScheme
@@ -49,6 +49,7 @@ var skin_color := Player.SkinColor.MEDIUM
 var spawn_position := Vector2.ZERO
 var state_factory := PlayerStateFactory.new()
 var weight_on_duty_steering := 0.0
+var kickoff_position := Vector2.ZERO
 
 func _ready() -> void:
 	set_control_texture()
@@ -75,7 +76,8 @@ func set_shader_properties() -> void:
 	player_sprite.material.set_shader_parameter("team_color", country_color)
 
 func initialize(context_position: Vector2, context_ball: Ball, context_own_goal: Goal,
-				context_target_goal: Goal, context_player_data: PlayerResource, context_country: String) -> void:
+				context_target_goal: Goal, context_player_data: PlayerResource, context_country: String,
+				context_kickoff_position: Vector2) -> void:
 	position = context_position
 	ball = context_ball
 	own_goal = context_own_goal
@@ -87,6 +89,7 @@ func initialize(context_position: Vector2, context_ball: Ball, context_own_goal:
 	fullname = context_player_data.full_name
 	heading = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
 	country = context_country
+	kickoff_position = context_kickoff_position
 
 func setup_ai_behavior() -> void:
 	current_ai_behavior = ai_behavior_factory.get_ai_behavior(role)
@@ -127,6 +130,10 @@ func set_heading() -> void:
 	elif velocity.x < 0:
 		heading = Vector2.LEFT
 
+func face_towards_target_goal() -> void:
+	if not is_facing_target_goal():
+		heading = heading * -1
+
 func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		player_sprite.flip_h = false
@@ -146,6 +153,9 @@ func get_hurt(hurt_origin: Vector2) -> void:
 
 func has_ball() -> bool:
 	return ball.carrier == self
+
+func is_ready_for_kickoff() -> bool:
+	return current_state != null and current_state.is_ready_for_kickoff()
 
 func set_control_texture() -> void:
 	control_sprite.texture = CONTROL_SCHEME_MAP[control_scheme]
