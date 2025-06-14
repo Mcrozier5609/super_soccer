@@ -21,4 +21,3 @@ func _process(delta: float) -> void:
 
 func _exit_tree() -> void:
 	sprite.scale.y = 1.0
-	#ball.height = 0

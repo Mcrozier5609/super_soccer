@@ -7,6 +7,7 @@ const BOUNCINESS := 0.8
 const DISTANCE_HIGH_PASS := 120
 const TUMBLE_INTANGIBILITY_DURATION := 200
 const PASS_INTANGIBILITY_DURATION := 500
+const KICKOFF_PASS_DISTANCE := 30.0
 const TUMBLE_HEIGHT_VELOCITY := 3.0
 
 @export var friction_air : float
@@ -29,6 +30,7 @@ func _ready() -> void:
 	switch_state(State.FREEFORM)
 	spawn_position = position
 	GameEvents.team_reset.connect(on_team_reset.bind())
+	GameEvents.kickoff_started.connect(on_kickoff_started.bind())
 
 func _process(_delta: float) -> void:  
 	ball_sprite.position = Vector2.UP * height
@@ -54,7 +56,7 @@ func tumble(tumble_velocity: Vector2) -> void:
 	height_velocity = TUMBLE_HEIGHT_VELOCITY
 	switch_state(Ball.State.FREEFORM, BallStateData.build().set_ball_intangibility(TUMBLE_INTANGIBILITY_DURATION))
 
-func pass_to(destination: Vector2) -> void:
+func pass_to(destination: Vector2, lock_duration: int = PASS_INTANGIBILITY_DURATION) -> void:
 	var direction := position.direction_to(destination)
 	var distance := position.distance_to(destination)
 	var intensity := sqrt(2 * distance * friction_ground)
@@ -62,7 +64,9 @@ func pass_to(destination: Vector2) -> void:
 	if distance > DISTANCE_HIGH_PASS:
 		height_velocity = BallState.GRAVITY * distance / (1.85 * intensity)
 	carrier = null
-	switch_state(Ball.State.FREEFORM, BallStateData.build().set_ball_intangibility(PASS_INTANGIBILITY_DURATION))
+	print("ball velocity")
+	print(velocity)
+	switch_state(Ball.State.FREEFORM, BallStateData.build().set_ball_intangibility(lock_duration))
 
 func stop() -> void:
 	velocity = Vector2.ZERO
@@ -82,4 +86,6 @@ func on_team_reset() -> void:
 	position = spawn_position
 	velocity = Vector2.ZERO
 	switch_state(State.FREEFORM)
-	height = 10.0
+
+func on_kickoff_started() -> void:
+	pass_to(spawn_position + Vector2.DOWN * KICKOFF_PASS_DISTANCE, 0)

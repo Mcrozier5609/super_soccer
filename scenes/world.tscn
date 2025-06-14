@@ -77,7 +77,7 @@ unique_name_in_owner = true
 position = Vector2(425, 180)
 
 [node name="KickOffPosition" type="Node2D" parent="ActorsContainer/KickOffs"]
-position = Vector2(-20, 0)
+position = Vector2(-30, 0)
 
 [node name="KickOffPosition2" type="Node2D" parent="ActorsContainer/KickOffs"]
 position = Vector2(-10, 30)
