@@ -17,6 +17,8 @@ const TUMBLE_HEIGHT_VELOCITY := 3.0
 @onready var ball_sprite : Sprite2D = %BallSprite
 @onready var player_detection_area : Area2D = %PlayerDectionArea
 @onready var scoring_raycast : RayCast2D = %ScoringRaycast
+@onready var shot_particles : GPUParticles2D = %ShotParticles
+
 
 var carrier : Player = null
 var current_state : BallState = null
@@ -40,7 +42,7 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 	if current_state != null:
 		current_state.queue_free()
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self, player_detection_area, carrier, animation_player, ball_sprite, state_data)
+	current_state.setup(self, player_detection_area, carrier, animation_player, ball_sprite, state_data, shot_particles)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = "BallStateMachine"
 	call_deferred("add_child", current_state)
@@ -83,6 +85,7 @@ func is_headed_for_scoring_area(scoring_area: Area2D) -> bool:
 func on_team_reset() -> void:
 	position = spawn_position
 	velocity = Vector2.ZERO
+	height = 0.0
 	switch_state(State.FREEFORM)
 
 func on_kickoff_started() -> void:
