@@ -4,13 +4,11 @@ extends PlayerState
 const AIR_FRICTION := 60.0
 const CELEBRATION_HEIGHT := 2.0
 
-var initial_delay := randi_range(0, 500)
+var initial_delay := randi_range(0, 700)
 var time_since_celebrate := Time.get_ticks_msec()
 
 func _enter_tree() -> void:
-	celebrate()
 	GameEvents.team_reset.connect(on_team_reset.bind())
-
 
 func _process(delta: float) -> void:
 	if player.height == 0 and Time.get_ticks_msec() - time_since_celebrate > initial_delay:
