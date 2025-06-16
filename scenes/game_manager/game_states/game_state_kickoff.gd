@@ -22,7 +22,9 @@ func _process(_delta: float) -> void:
 		for control_scheme : Player.ControlScheme in valid_control_schemes:
 			if KeyUtiles.is_action_just_press(control_scheme, KeyUtiles.Action.PASS):
 				GameEvents.kickoff_started.emit()
+				SoundPlayer.play(SoundPlayer.Sound.WHISTLE)
 				transition_state(GameManager.State.IN_PLAY)
 	elif Time.get_ticks_msec() - kickoff_start > random_cpu_kickoff_time:
 		GameEvents.kickoff_started.emit()
+		SoundPlayer.play(SoundPlayer.Sound.WHISTLE)
 		transition_state(GameManager.State.IN_PLAY)

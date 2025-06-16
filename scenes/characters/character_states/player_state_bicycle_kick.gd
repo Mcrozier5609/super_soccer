@@ -11,7 +11,8 @@ func _enter_tree() -> void:
 
 func on_ball_entered(contact_ball: Ball) -> void:
 	if contact_ball.can_air_connect(BALL_HEIGHT_MIN, BALL_HEIGHT_MAX):
-		var rand_direction_to_target_goal := player.position.direction_to(target_goal.get_random_target_position())
+		var rand_direction_to_target_goal := ball.position.direction_to(target_goal.get_random_target_position())
+		SoundPlayer.play(SoundPlayer.Sound.POWERSHOT)
 		contact_ball.shoot(rand_direction_to_target_goal * player.power * BONUS_POWER)
 
 func on_animation_complete() -> void:
