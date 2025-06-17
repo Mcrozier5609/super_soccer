@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="super soccer"
-run/main_scene="uid://df5he65usp1u7"
+run/main_scene="uid://ckynhnxi5r01p"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 DataLoader="*res://utils/data_loader.gd"
-GameEvents="*res://scenes/game_events.gd"
+GameEvents="*res://scenes/screens/world/game_events.gd"
 GameManager="*res://scenes/game_manager/game_manager.gd"
 SoundPlayer="*res://scenes/audio/sound_player.gd"
 

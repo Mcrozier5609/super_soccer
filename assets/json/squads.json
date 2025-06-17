@@ -334,13 +334,13 @@
 		"name": "A. AHMED",
 		"skin": 2,
 		"role": 2,
-		"speed": 65,
+		"speed": 72,
 		"power": 140,
 	}, {
 		"name": "T. BUCHANAN",
 		"skin": 1,
 		"role": 3,
-		"speed": 65,
+		"speed": 80,
 		"power": 125,
 	}, {
 		"name": "J. DAVID",
@@ -348,5 +348,44 @@
 		"role": 3,
 		"speed": 75,
 		"power": 150,
+	}]
+}, {
+	"country": "MARS",
+	"players": [{
+		"name": "D. MONKEY",
+		"skin": 0,
+		"role": 0,
+		"speed": 85,
+		"power": 100,
+	}, {
+		"name": "M. ARTIAN",
+		"skin": 0,
+		"role": 1,
+		"speed": 80,
+		"power": 190,
+	}, {
+		"name": "J. JIMBO",
+		"skin": 0,
+		"role": 1,
+		"speed": 84,
+		"power": 187,
+	}, {
+		"name": "D. XERTZ",
+		"skin": 0,
+		"role": 2,
+		"speed": 85,
+		"power": 187,
+	}, {
+		"name": "X. COSMO",
+		"skin": 0,
+		"role": 3,
+		"speed": 88,
+		"power": 192,
+	}, {
+		"name": "A. NEBULON",
+		"skin": 0,
+		"role": 3,
+		"speed": 83,
+		"power": 189,
 	}]
 }]

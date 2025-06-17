@@ -12,6 +12,8 @@ var score : Array[int] = [0, 0]
 var state_factory := GameStateFactory.new()
 var time_left : float
 var time_since_paused := Time.get_ticks_msec()
+var mars_unlocked := false
+var selector_coord := Vector2i.ZERO
 
 func _init() -> void:
 	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
@@ -19,11 +21,13 @@ func _init() -> void:
 func _ready() -> void:
 	time_left = DURATION_GAME_SEC
 	GameEvents.impact_received.connect(on_impact_received.bind())
-	switch_states(State.RESET)
 
 func _process(_delta: float) -> void:
 	if get_tree().paused and Time.get_ticks_msec() - time_since_paused > DURATION_IMPAT_PAUSE:
 		get_tree().paused = false
+
+func start_game() -> void:
+	switch_states(State.RESET)
 
 func switch_states(state: State, data: GameStateData = GameStateData.new()) -> void:
 	if current_state != null:

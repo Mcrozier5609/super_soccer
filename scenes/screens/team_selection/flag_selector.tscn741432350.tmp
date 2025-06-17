@@ -5,24 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b0hy2o8akyj05" path="res://assets/art/ui/flags/flag-selection.png" id="2_k6wrs"]
 [ext_resource type="Texture2D" uid="uid://dcioxtcu4mmtf" path="res://assets/art/props/2p.png" id="2_u0mo3"]
 
-[sub_resource type="Animation" id="Animation_uhsia"]
-resource_name = "selecting"
-length = 0.4
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Border:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_mk3kq"]
 length = 0.001
 tracks/0/type = "value"
@@ -54,6 +36,24 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_uhsia"]
+resource_name = "selecting"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Border:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jmpry"]
