@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://biiih7b1bfr0"
-path="res://.godot/imported/tournament-screen.png-233c3f1cd5256771503c810f6db99257.ctex"
+path="res://.godot/imported/tournament-screen.png-7e8f02be4bbb7d823be7af76cd34fcef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/ui/teamselection/tournament-screen.png"
-dest_files=["res://.godot/imported/tournament-screen.png-233c3f1cd5256771503c810f6db99257.ctex"]
+source_file="res://assets/art/ui/flags/tournament-screen.png"
+dest_files=["res://.godot/imported/tournament-screen.png-7e8f02be4bbb7d823be7af76cd34fcef.ctex"]
 
 [params]
 
