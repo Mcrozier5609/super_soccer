@@ -20,7 +20,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if not is_selected and KeyUtiles.is_action_just_press(control_scheme, KeyUtiles.Action.SHOOT):
-		print(selector_coords)
 		if selector_coords == Vector2i(4, 1) and not GameManager.mars_unlocked:
 			animation_player.play("unavailable")
 			SoundPlayer.play(SoundPlayer.Sound.BOUNCE)
