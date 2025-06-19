@@ -9,7 +9,7 @@ func _enter_tree():
 	kickoff_start = Time.get_ticks_msec()
 	var country_starting := state_data.country_scored_on
 	if country_starting.is_empty():
-		country_starting = manager.countries[0]
+		country_starting = manager.current_matchup.country_home
 	if country_starting == manager.player_setup[0]:
 		valid_control_schemes.append(Player.ControlScheme.P1)
 	if country_starting == manager.player_setup[1]:
