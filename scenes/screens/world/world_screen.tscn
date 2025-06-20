@@ -149,3 +149,8 @@ polygon = PackedVector2Array(14, -1, 28, -1, 13, 119, 0, 119)
 position = Vector2(425, 180)
 
 [node name="UI" parent="." instance=ExtResource("11_do6o6")]
+
+[node name="GameOverTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
