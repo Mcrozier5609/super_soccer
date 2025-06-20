@@ -14,7 +14,10 @@ var winner := ""
 func _init() -> void:
 	var countries := DataLoader.get_countries().slice(1, 10)
 	countries.shuffle()
-	countries = countries.slice(0, 9)
+	if countries[-1] != GameManager.player_setup[0]:
+		countries.pop_at(-1)
+	else:
+		countries.pop_at(-2)
 	create_bracket(Stage.QUARTER_FINALS, countries)
 
 func create_bracket(stage: Stage, countries: Array[String]) -> void:

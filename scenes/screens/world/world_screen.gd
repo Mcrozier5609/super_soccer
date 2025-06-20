@@ -5,6 +5,7 @@ extends Screen
 
 
 func _enter_tree() -> void:
+	super._enter_tree()
 	GameEvents.game_over.connect(on_game_over.bind())
 	GameManager.start_game()
 
