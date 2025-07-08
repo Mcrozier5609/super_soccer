@@ -18,6 +18,7 @@ var selection : Array[Vector2i] = [Vector2i.ZERO, Vector2i.ZERO]
 var selectors : Array[FlagSelector] = []
 
 func _ready() -> void:
+	check_mars_unlocked()
 	place_flags()
 	place_selectors()
 
@@ -41,6 +42,12 @@ func try_navigate(selector_index: int, direction: Vector2i) -> void:
 		selectors[selector_index].position = flags_container.get_child(flag_index).position
 		selectors[selector_index].selector_coords = selection[selector_index]
 		SoundPlayer.play(SoundPlayer.Sound.UI_NAV)
+
+func check_mars_unlocked() -> void:
+	if GameManager.mars_unlocked:
+		GameManager.show_mars_flag = true
+	else:
+		GameManager.show_mars_flag = false
 
 func place_flags() -> void:
 	for j in range(NUM_ROWS):

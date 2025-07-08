@@ -1,7 +1,7 @@
 extends Node
 
 const DURATION_IMPAT_PAUSE := 100
-const DURATION_GAME_SEC := 2 * 60
+const DURATION_GAME_SEC := 2# * 60
 
 enum State {IN_PLAY, SCORED, RESET, KICKOFF, OVERTIME, GAMEOVER}
 
@@ -13,6 +13,7 @@ var time_left : float
 var time_since_paused := Time.get_ticks_msec()
 
 var mars_unlocked := false
+var show_mars_flag := false
 var selector_coord := Vector2i.ZERO
 
 func _init() -> void:

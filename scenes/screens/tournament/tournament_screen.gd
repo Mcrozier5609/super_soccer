@@ -12,6 +12,7 @@ const STAGE_TEXTURES := {
 	Tournament.Stage.QUARTER_FINALS: [%QFLeftContainer, %QFRightContainer],
 	Tournament.Stage.SEMI_FINALS: [%SFLeftContainer, %SFRightContainer],
 	Tournament.Stage.FINAL: [%FinalLeftContainer, %FinalRightContainer],
+	Tournament.Stage.SECRET: [%FinalLeftContainer, %FinalRightContainer],
 	Tournament.Stage.COMPLETE: [%WinnerContainer],
 }
 @onready var stage_texture : TextureRect = %StageTexture
@@ -23,6 +24,9 @@ func _ready() -> void:
 	tournament = screen_data.tournament
 	if tournament.current_stage == Tournament.Stage.COMPLETE:
 		MusicPlayer.play_music(MusicPlayer.Music.WIN)
+		GameManager.mars_unlocked = true
+	elif tournament.current_stage == Tournament.Stage.SECRET:
+		GameManager.show_mars_flag = true
 	refresh_brackets()
 
 func _process(_delta: float) -> void:
@@ -35,7 +39,10 @@ func _process(_delta: float) -> void:
 
 func refresh_brackets() -> void:
 	for stage in range(tournament.current_stage + 1):
-		refresh_bracket_stage(stage)
+		if stage == tournament.Stage.FINAL and tournament.current_stage == tournament.Stage.SECRET:
+			pass
+		else: 
+			refresh_bracket_stage(stage)
 
 func refresh_bracket_stage(stage: Tournament.Stage) -> void:
 	var flag_nodes := get_flag_nodes_for_stage(stage)

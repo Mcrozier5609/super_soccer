@@ -56,6 +56,7 @@ var kickoff_position := Vector2.ZERO
 func _ready() -> void:
 	set_control_texture()
 	setup_ai_behavior()
+	set_sprite()
 	set_shader_properties()
 	permanent_damage_emiter_area.monitoring = role == Role.GOALIE
 	goalie_hands_collider.disabled = role != Role.GOALIE
@@ -72,6 +73,11 @@ func _process(delta: float) -> void:
 	set_sprite_visibility()
 	process_gravity(delta)
 	move_and_slide()
+
+func set_sprite() -> void:
+	if country == "MARS":
+		var alien_texture = load("res://assets/art/characters/alien-soccer-player.png")
+		player_sprite.texture = alien_texture
 
 func set_shader_properties() -> void:
 	player_sprite.material.set_shader_parameter("skin_color", skin_color)
