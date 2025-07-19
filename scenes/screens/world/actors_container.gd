@@ -11,11 +11,26 @@ const SPARK_PREFAB := preload("res://scenes/spark/spark.tscn")
 
 @onready var kickoffs : Node2D = %KickOffs
 @onready var spawns : Node2D = %Spawns
+@onready var top_crowd : Sprite2D = %TopCrowd
 
 var is_checking_for_kickoff_readiness := false
 var squad_home : Array[Player] = []
 var squad_away : Array[Player] = []
 var time_since_last_cache_refresh := Time.get_ticks_msec()
+
+# Crowd stuff
+var crowd_texture_1 = preload("res://assets/art/backgrounds/crowd_1.png")
+var crowd_texture_2 = preload("res://assets/art/backgrounds/crowd_2.png")
+var crowd_texture_3 = preload("res://assets/art/backgrounds/crowd_3.png")
+var crowd_list : Array = [crowd_texture_1, crowd_texture_2, crowd_texture_3]
+var current_crowd := 0
+var time_at_sprite_swap := Time.get_ticks_msec()
+var time_at_tackle := Time.get_ticks_msec()
+var tackled := false
+
+const MIN_SPRITE_DWELL_TIME := 50
+const MAX_SPRITE_DWELL_TIME := 500
+const TACKLE_CELEBRATION_TIME := 1000
 
 func _init() -> void:
 	GameEvents.team_reset.connect(on_team_reset.bind())
@@ -29,6 +44,7 @@ func _ready() -> void:
 	squad_away = spawn_players(GameManager.current_matchup.country_away, goal_away)
 	goal_away.initialize(GameManager.current_matchup.country_away)
 	setup_control_schemes()
+	set_crowd_shader_properties()
 
 func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() - time_since_last_cache_refresh > DURATION_WEIGHT_CACHE:
@@ -36,6 +52,18 @@ func _process(_delta: float) -> void:
 		set_on_duty_weights()
 	if is_checking_for_kickoff_readiness:
 		check_for_kickoff_readiness()
+	# crowd stuff
+	var sprite_dwell_time := 100
+	if tackled:
+		sprite_dwell_time = MIN_SPRITE_DWELL_TIME
+		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
+			tackled = false
+	if Time.get_ticks_msec() - time_at_sprite_swap > sprite_dwell_time:
+		time_at_sprite_swap = Time.get_ticks_msec()
+		current_crowd += 1
+		if current_crowd == 3:
+			current_crowd = 0
+		top_crowd.texture = crowd_list[current_crowd]
 
 func spawn_players(country: String, own_goal: Goal) -> Array[Player]:
 	var player_nodes : Array[Player] = []
@@ -57,6 +85,7 @@ func spawn_player(player_position: Vector2, own_goal: Goal, target_goal: Goal, p
 	var player :Player = PLAYER_PREFAB.instantiate()
 	player.initialize(player_position, ball, own_goal, target_goal, player_data, country, kickoff_position)
 	player.swap_requested.connect(on_player_swap_request.bind())
+	player.was_tackled.connect(on_tackle.bind())
 	return player
 
 func set_on_duty_weights() -> void:
@@ -120,3 +149,16 @@ func on_impact_received(impact_position: Vector2, _is_high_impact: bool) -> void
 	var spark := SPARK_PREFAB.instantiate()
 	spark.position = impact_position
 	add_child(spark)
+
+func set_crowd_shader_properties() -> void:
+	var countries = DataLoader.get_countries()
+	var home_color := countries.find(GameManager.current_matchup.country_home)
+	home_color = clampi(home_color, 0, countries.size() - 1)
+	top_crowd.material.set_shader_parameter("home_color", home_color)
+	var away_color := countries.find(GameManager.current_matchup.country_away)
+	away_color = clampi(away_color, 0, countries.size() - 1)
+	top_crowd.material.set_shader_parameter("away_color", away_color)
+
+func on_tackle() -> void:
+	time_at_tackle = Time.get_ticks_msec()
+	tackled = true

@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 signal swap_requested(player: Player)
+signal was_tackled()
 
 const CONTROL_SCHEME_MAP : Dictionary = {
 	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
@@ -167,6 +168,7 @@ func set_sprite_visibility() -> void:
 
 func get_hurt(hurt_origin: Vector2) -> void:
 	var data = PlayerStateData.build().set_hurt_direction(hurt_origin)
+	was_tackled.emit()
 	switch_states(Player.State.HURT, data)
 
 func has_ball() -> bool:

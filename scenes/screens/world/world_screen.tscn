@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://df5he65usp1u7"]
+[gd_scene load_steps=18 format=3 uid="uid://df5he65usp1u7"]
 
 [ext_resource type="Script" uid="uid://brigcu7nnfocc" path="res://scenes/screens/world/camera.gd" id="1_uboyb"]
 [ext_resource type="Script" uid="uid://cqbio6t7mjuwv" path="res://scenes/screens/world/world_screen.gd" id="1_yvi4u"]
@@ -8,10 +8,19 @@
 [ext_resource type="Script" uid="uid://bx21dyu5f8kxw" path="res://scenes/screens/world/actors_container.gd" id="5_58p02"]
 [ext_resource type="PackedScene" uid="uid://bhk81yh8okb26" path="res://scenes/goals/goal.tscn" id="6_hd6lw"]
 [ext_resource type="Texture2D" uid="uid://dmmeunc04qljy" path="res://assets/art/backgrounds/top-wall.png" id="7_4ehs6"]
+[ext_resource type="Shader" uid="uid://c6kh5dp7w1yqv" path="res://shaders/crowd_colors.gdshader" id="7_58p02"]
+[ext_resource type="Texture2D" uid="uid://8o7d86icpvl2" path="res://assets/art/palettes/teams-color-palette-new.png" id="8_hd6lw"]
 [ext_resource type="Texture2D" uid="uid://d3hijwrnlnq0l" path="res://assets/art/backgrounds/bottom-wall.png" id="8_u3f6p"]
+[ext_resource type="Texture2D" uid="uid://bb6ci2518gysl" path="res://assets/art/backgrounds/crowd_1.png" id="9_4ehs6"]
 [ext_resource type="Texture2D" uid="uid://ddkditcwb62yr" path="res://assets/art/backgrounds/side-wall.png" id="9_wp4qm"]
 [ext_resource type="PackedScene" uid="uid://bfseityuwqtjc" path="res://scenes/ball/ball.tscn" id="10_infcd"]
 [ext_resource type="PackedScene" uid="uid://ccsbueu23wa6a" path="res://scenes/ui/ui.tscn" id="11_do6o6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u3f6p"]
+shader = ExtResource("7_58p02")
+shader_parameter/team_palette = ExtResource("8_hd6lw")
+shader_parameter/home_color = 0
+shader_parameter/away_color = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r4gi"]
 size = Vector2(802, 7)
@@ -88,6 +97,13 @@ position = Vector2(-10, 30)
 
 [node name="PitchObjects" type="Node2D" parent="ActorsContainer"]
 y_sort_enabled = true
+
+[node name="TopCrowd" type="Sprite2D" parent="ActorsContainer/PitchObjects"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_u3f6p")
+position = Vector2(0, 1)
+texture = ExtResource("9_4ehs6")
+centered = false
 
 [node name="GoalHome" parent="ActorsContainer/PitchObjects" instance=ExtResource("6_hd6lw")]
 position = Vector2(32, 220)
