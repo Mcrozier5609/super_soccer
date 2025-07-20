@@ -28,9 +28,10 @@ var time_at_sprite_swap := Time.get_ticks_msec()
 var time_at_tackle := Time.get_ticks_msec()
 var tackled := false
 
-const MIN_SPRITE_DWELL_TIME := 50
-const MAX_SPRITE_DWELL_TIME := 500
-const TACKLE_CELEBRATION_TIME := 1000
+const MIN_SPRITE_DWELL_TIME := 100.0
+const MAX_SPRITE_DWELL_TIME := 500.0
+const TACKLE_CELEBRATION_TIME := 1000.0
+const TACKLE_SPRITE_DWELL_TIME := 50.0
 
 func _init() -> void:
 	GameEvents.team_reset.connect(on_team_reset.bind())
@@ -53,11 +54,26 @@ func _process(_delta: float) -> void:
 	if is_checking_for_kickoff_readiness:
 		check_for_kickoff_readiness()
 	# crowd stuff
-	var sprite_dwell_time := 100
+	var sprite_dwell_time := 100.0
 	if tackled:
-		sprite_dwell_time = MIN_SPRITE_DWELL_TIME
+		sprite_dwell_time = TACKLE_SPRITE_DWELL_TIME
 		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
 			tackled = false
+	else:
+		var goal_position := 0.0
+		var center_offset := 0.0
+		var clmp_x_position := 0.0
+		if ball.position[0] > ball.spawn_position[0] + 30:
+			center_offset = ball.spawn_position[0] + 30
+			goal_position = goal_away.position[0] - 100
+			clmp_x_position = clampf(ball.position[0], center_offset, goal_position)
+		else:
+			center_offset = ball.spawn_position[0] - 30
+			goal_position = goal_home.position[0] + 100
+			clmp_x_position = clampf(ball.position[0], goal_position, center_offset)
+		var distance_weight : float = abs(clmp_x_position - goal_position) / abs(center_offset - goal_position)
+		sprite_dwell_time = (distance_weight * (MAX_SPRITE_DWELL_TIME - MIN_SPRITE_DWELL_TIME) + MIN_SPRITE_DWELL_TIME)
+		
 	if Time.get_ticks_msec() - time_at_sprite_swap > sprite_dwell_time:
 		time_at_sprite_swap = Time.get_ticks_msec()
 		current_crowd += 1
