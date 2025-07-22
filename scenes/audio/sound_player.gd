@@ -15,6 +15,7 @@ const SFX_MAP: Dictionary[Sound, AudioStream] = {
 	Sound.WHISTLE: preload("res://assets/sfx/whistle.wav"),
 	Sound.CROWD: preload("res://assets/sfx/crowd_sfx_wav.wav"),
 }
+const VOLUME_RATE := 1.0
 
 var stream_players : Array[AudioStreamPlayer] = []
 
@@ -40,4 +41,11 @@ func find_first_available_player() -> AudioStreamPlayer:
 		if not stream_player.playing:
 			return stream_player
 	return null
-			
+
+func smooth_sound(delta: float, target_volume: float):
+	var current_volume := crowd_player.get_volume_linear()
+	if target_volume > current_volume:
+		target_volume = current_volume + (VOLUME_RATE * delta)
+	else:
+		target_volume = current_volume - (VOLUME_RATE * delta)
+	return target_volume

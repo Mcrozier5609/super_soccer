@@ -27,15 +27,20 @@ var current_crowd := 0
 var time_at_sprite_swap := Time.get_ticks_msec()
 var time_at_tackle := Time.get_ticks_msec()
 var tackled := false
+var crowd_noise_lvl := 1.0
 
 const MIN_SPRITE_DWELL_TIME := 100.0
 const MAX_SPRITE_DWELL_TIME := 500.0
 const TACKLE_CELEBRATION_TIME := 1000.0
 const TACKLE_SPRITE_DWELL_TIME := 50.0
+const MIN_CROWD_NOISE := 0.5
+const MAX_CROWD_NOISE := 1.5
+const TACKLE_CROWD_NOISE := 4.0
 
 func _init() -> void:
 	GameEvents.team_reset.connect(on_team_reset.bind())
 	GameEvents.impact_received.connect(on_impact_received.bind())
+	GameEvents.team_scored.connect(on_team_scored_on.bind())
 
 func _ready() -> void:
 	squad_home = spawn_players(GameManager.current_matchup.country_home, goal_home)
@@ -47,7 +52,7 @@ func _ready() -> void:
 	setup_control_schemes()
 	set_crowd_shader_properties()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Time.get_ticks_msec() - time_since_last_cache_refresh > DURATION_WEIGHT_CACHE:
 		time_since_last_cache_refresh = Time.get_ticks_msec()
 		set_on_duty_weights()
@@ -57,6 +62,7 @@ func _process(_delta: float) -> void:
 	var sprite_dwell_time := 100.0
 	if tackled:
 		sprite_dwell_time = TACKLE_SPRITE_DWELL_TIME
+		crowd_noise_lvl = TACKLE_CROWD_NOISE
 		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
 			tackled = false
 	else:
@@ -73,6 +79,8 @@ func _process(_delta: float) -> void:
 			clmp_x_position = clampf(ball.position[0], goal_position, center_offset)
 		var distance_weight : float = abs(clmp_x_position - goal_position) / abs(center_offset - goal_position)
 		sprite_dwell_time = (distance_weight * (MAX_SPRITE_DWELL_TIME - MIN_SPRITE_DWELL_TIME) + MIN_SPRITE_DWELL_TIME)
+		crowd_noise_lvl = ((1 - distance_weight) * (MAX_CROWD_NOISE - MIN_CROWD_NOISE) + MIN_CROWD_NOISE)
+		crowd_noise_lvl = SoundPlayer.smooth_sound(delta, crowd_noise_lvl)
 		
 	if Time.get_ticks_msec() - time_at_sprite_swap > sprite_dwell_time:
 		time_at_sprite_swap = Time.get_ticks_msec()
@@ -80,6 +88,7 @@ func _process(_delta: float) -> void:
 		if current_crowd == 3:
 			current_crowd = 0
 		top_crowd.texture = crowd_list[current_crowd]
+	SoundPlayer.crowd_player.set_volume_linear(crowd_noise_lvl)
 
 func spawn_players(country: String, own_goal: Goal) -> Array[Player]:
 	var player_nodes : Array[Player] = []
@@ -178,3 +187,6 @@ func set_crowd_shader_properties() -> void:
 func on_tackle() -> void:
 	time_at_tackle = Time.get_ticks_msec()
 	tackled = true
+
+func on_team_scored_on(_team_scored_on: String) -> void:
+	on_tackle()
