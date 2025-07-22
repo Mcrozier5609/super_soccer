@@ -8,9 +8,14 @@ func _enter_tree() -> void:
 	super._enter_tree()
 	GameEvents.game_over.connect(on_game_over.bind())
 	GameManager.start_game()
+	SoundPlayer.crowd_player.play()
+
+func _exit_tree() -> void:
+	SoundPlayer.crowd_player.stop()
 
 func _ready() -> void:
 	game_over_timer.timeout.connect(on_transition.bind())
+
 
 func on_transition() -> void:
 	if screen_data.tournament != null and GameManager.current_matchup.winner == GameManager.player_setup[0]:

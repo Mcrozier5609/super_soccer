@@ -1,8 +1,8 @@
 extends Node
 
-enum Sound {BOUNCE, HURT, PASS, POWERSHOT, SHOT, TACKLE, UI_NAV, UI_SELECT, WHISTLE}
+enum Sound {BOUNCE, HURT, PASS, POWERSHOT, SHOT, TACKLE, UI_NAV, UI_SELECT, WHISTLE, CROWD}
 
-const NUM_CHANNELS := 4
+const NUM_CHANNELS := 5
 const SFX_MAP: Dictionary[Sound, AudioStream] = {
 	Sound.BOUNCE: preload("res://assets/sfx/bounce.wav"),
 	Sound.HURT: preload("res://assets/sfx/hurt.wav"),
@@ -13,15 +13,21 @@ const SFX_MAP: Dictionary[Sound, AudioStream] = {
 	Sound.UI_NAV: preload("res://assets/sfx/ui-navigate.wav"),
 	Sound.UI_SELECT: preload("res://assets/sfx/ui-select.wav"),
 	Sound.WHISTLE: preload("res://assets/sfx/whistle.wav"),
+	Sound.CROWD: preload("res://assets/sfx/crowd_sfx_wav.wav"),
 }
 
 var stream_players : Array[AudioStreamPlayer] = []
+
+var crowd_player : AudioStreamPlayer
 
 func _ready() -> void:
 	for i in range(NUM_CHANNELS):
 		var stream_player := AudioStreamPlayer.new()
 		stream_players.append(stream_player)
 		add_child(stream_player)
+	crowd_player = AudioStreamPlayer.new()
+	add_child(crowd_player)
+	crowd_player.stream = SFX_MAP[Sound.CROWD]
 
 func play(sound: Sound) -> void:
 	var stream_player := find_first_available_player()
