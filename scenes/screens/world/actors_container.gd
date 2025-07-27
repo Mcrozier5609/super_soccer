@@ -27,6 +27,7 @@ var current_crowd := 0
 var time_at_sprite_swap := Time.get_ticks_msec()
 var time_at_tackle := Time.get_ticks_msec()
 var tackled := false
+var scored := false
 var crowd_noise_lvl := 1.0
 
 const MIN_SPRITE_DWELL_TIME := 100.0
@@ -62,9 +63,13 @@ func _process(delta: float) -> void:
 	var sprite_dwell_time := 100.0
 	if tackled:
 		sprite_dwell_time = TACKLE_SPRITE_DWELL_TIME
-		crowd_noise_lvl = TACKLE_CROWD_NOISE
+		SoundPlayer.play(SoundPlayer.Sound.CROWD_WOOSH, 0.5)
 		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
 			tackled = false
+	if scored:
+		crowd_noise_lvl = TACKLE_CROWD_NOISE
+		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
+			scored = false
 	else:
 		var goal_position := 0.0
 		var center_offset := 0.0
@@ -189,4 +194,5 @@ func on_tackle() -> void:
 	tackled = true
 
 func on_team_scored_on(_team_scored_on: String) -> void:
+	scored = true
 	on_tackle()

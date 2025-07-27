@@ -4,7 +4,7 @@ enum Music {NONE, GAMEPLAY, MENU, TOURNAMENT, WIN}
 
 const MUSIC_MAP : Dictionary[Music, AudioStream] = {
 	Music.GAMEPLAY: preload("res://assets/music/gameplay.mp3"),
-	Music.MENU: preload("res://assets/music/menu.mp3"),
+	Music.MENU: preload("res://assets/music/ole_ole_ole_mps.mp3"),
 	Music.TOURNAMENT: preload("res://assets/music/tournament.mp3"),
 	Music.WIN: preload("res://assets/music/win.mp3"),
 }
