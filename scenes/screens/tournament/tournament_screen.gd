@@ -23,9 +23,10 @@ var tournament : Tournament = null
 func _ready() -> void:
 	tournament = screen_data.tournament
 	if tournament.current_stage == Tournament.Stage.COMPLETE:
-		MusicPlayer.play_music(MusicPlayer.Music.WIN)
+		MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
 		GameManager.mars_unlocked = true
 	elif tournament.current_stage == Tournament.Stage.SECRET:
+		MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
 		GameManager.show_mars_flag = true
 	refresh_brackets()
 
