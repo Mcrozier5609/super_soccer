@@ -1,0 +1,28 @@
+[gd_scene load_steps=8 format=3 uid="uid://0tadhn42s7h"]
+
+[ext_resource type="Script" uid="uid://bd8huv27d0cli" path="res://scenes/screens/victory/victory_screen.gd" id="1_7u2gp"]
+[ext_resource type="Shader" uid="uid://cs0eg2qb6sgjn" path="res://shaders/victory_shader.gdshader" id="2_0j1f7"]
+[ext_resource type="Texture2D" uid="uid://c17ff7cp3t2cg" path="res://assets/art/ui/victory/soccer_winners_palette.png" id="2_imokr"]
+[ext_resource type="Texture2D" uid="uid://bjbm4udqlxlvf" path="res://assets/art/palettes/skin-colors-palette.png" id="3_epl50"]
+[ext_resource type="Texture2D" uid="uid://8o7d86icpvl2" path="res://assets/art/palettes/teams-color-palette-new.png" id="4_6qbeg"]
+[ext_resource type="Texture2D" uid="uid://bh2a5e0huyt4c" path="res://assets/art/palettes/victory_skin_palette.png" id="5_6qbeg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_80alk"]
+shader = ExtResource("2_0j1f7")
+shader_parameter/team_palette = ExtResource("4_6qbeg")
+shader_parameter/skin_palette = ExtResource("3_epl50")
+shader_parameter/victory_palette = ExtResource("5_6qbeg")
+shader_parameter/teams_colors = PackedInt32Array(0, 0)
+shader_parameter/skin_colors = PackedInt32Array(0, 0, 0, 0, 0, 0)
+
+[node name="VictoryScreen" type="Node"]
+script = ExtResource("1_7u2gp")
+
+[node name="WinnerBackground" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_80alk")
+offset_left = 5.0
+offset_right = 185.0
+offset_bottom = 120.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_imokr")

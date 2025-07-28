@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/soccer_menu_loop.mp3-95ff8681a31cc2581b274f65
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
