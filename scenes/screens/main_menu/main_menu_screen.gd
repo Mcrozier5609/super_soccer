@@ -12,10 +12,6 @@ const MENU_TEXTURES := [
 var current_selected_index := 0
 var is_active := false
 
-func _ready() -> void:
-	pass
-	#refresh_ui()
-
 func _process(_delta: float) -> void:
 	if is_active:
 		if KeyUtiles.is_action_just_press(Player.ControlScheme.P1, KeyUtiles.Action.UP):

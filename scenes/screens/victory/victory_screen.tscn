@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://0tadhn42s7h"]
+[gd_scene load_steps=17 format=3 uid="uid://0tadhn42s7h"]
 
 [ext_resource type="Script" uid="uid://bd8huv27d0cli" path="res://scenes/screens/victory/victory_screen.gd" id="1_7u2gp"]
 [ext_resource type="Shader" uid="uid://cs0eg2qb6sgjn" path="res://shaders/victory_shader.gdshader" id="2_0j1f7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bh2a5e0huyt4c" path="res://assets/art/palettes/victory_skin_palette.png" id="5_6qbeg"]
 [ext_resource type="Texture2D" uid="uid://usjkjh3lm1r" path="res://assets/art/ui/victory/soccer_winners_280_180.png" id="6_6qbeg"]
 [ext_resource type="Texture2D" uid="uid://bak0n8hsdqaol" path="res://assets/art/particles/confetti_particle.png" id="7_d1yo1"]
+[ext_resource type="Texture2D" uid="uid://c40534fwh7qt1" path="res://assets/art/ui/victory/shadow_mask.png" id="7_giwwc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_80alk"]
 shader = ExtResource("2_0j1f7")
@@ -44,6 +45,42 @@ angular_velocity_max = 153.71
 gravity = Vector3(0, 40, 0)
 anim_offset_max = 1.0
 
+[sub_resource type="Animation" id="Animation_mfrlo"]
+resource_name = "enter_shadow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("shadow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.99),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-280, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_glg7j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("shadow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d7g6g"]
+_data = {
+&"RESET": SubResource("Animation_glg7j"),
+&"enter_shadow": SubResource("Animation_mfrlo")
+}
+
 [node name="VictoryScreen" type="Node"]
 script = ExtResource("1_7u2gp")
 
@@ -53,6 +90,13 @@ material = SubResource("ShaderMaterial_80alk")
 offset_right = 280.0
 offset_bottom = 180.0
 texture = ExtResource("6_6qbeg")
+
+[node name="shadow" type="TextureRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 0.784314)
+offset_left = -280.0
+offset_bottom = 180.0
+texture = ExtResource("7_giwwc")
 
 [node name="confetti_root_1" type="Node2D" parent="."]
 position = Vector2(-27, 30.335)
@@ -83,3 +127,9 @@ amount = 15
 texture = ExtResource("7_d1yo1")
 lifetime = 3.76
 process_material = SubResource("ParticleProcessMaterial_glg7j")
+
+[node name="shadow_enter" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_d7g6g")
+}
