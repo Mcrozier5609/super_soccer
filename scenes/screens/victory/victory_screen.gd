@@ -3,17 +3,31 @@ extends Screen
 
 @onready var winner_background := %WinnerBackground
 
+var tournament : Tournament
+
 func _ready() -> void:
-	MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
+	tournament = screen_data.tournament
+	if tournament.current_stage == Tournament.Stage.LOCKED:
+		screen_data.tournament.advance()
+		MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
+	else:
+		MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
 	set_shader_properties()
 
 func _process(_delta: float) -> void:
-	pass
+	if KeyUtiles.is_action_just_press(Player.ControlScheme.P1, KeyUtiles.Action.SHOOT):
+		if tournament.current_stage == Tournament.Stage.COMPLETE:
+			transition_screen(SoccerGame.ScreenType.MAIN_MENU)
+		else:
+			transition_screen(SoccerGame.ScreenType.TOURNAMENT, screen_data)
+		SoundPlayer.play(SoundPlayer.Sound.UI_SELECT)
 
 func set_shader_properties() -> void:
 	# Set jersey colors
-	var tournament : Tournament = screen_data.tournament
-	var final_match : Match = tournament.matches[tournament.current_stage - 1][0]
+	var this_stage := tournament.current_stage
+	if this_stage == Tournament.Stage.SECRET:
+		this_stage = Tournament.Stage.LOCKED
+	var final_match : Match = tournament.matches[this_stage - 1][0]
 	var countries = DataLoader.get_countries()
 	var winner_country := countries.find(final_match.winner)
 	winner_country = clampi(winner_country, 0, countries.size() - 1)

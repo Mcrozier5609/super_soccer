@@ -5,6 +5,7 @@ const STAGE_TEXTURES := {
 	Tournament.Stage.QUARTER_FINALS: preload("res://assets/art/ui/teamselection/quarters-label.png"),
 	Tournament.Stage.SEMI_FINALS: preload("res://assets/art/ui/teamselection/semis-label.png"),
 	Tournament.Stage.FINAL: preload("res://assets/art/ui/teamselection/finals-label.png"),
+	Tournament.Stage.LOCKED: preload("res://assets/art/ui/teamselection/secret-label.png"),
 	Tournament.Stage.SECRET: preload("res://assets/art/ui/teamselection/secret-label.png"),
 	Tournament.Stage.COMPLETE: preload("res://assets/art/ui/teamselection/winner-label.png"),
 }
@@ -13,6 +14,7 @@ const STAGE_TEXTURES := {
 	Tournament.Stage.QUARTER_FINALS: [%QFLeftContainer, %QFRightContainer],
 	Tournament.Stage.SEMI_FINALS: [%SFLeftContainer, %SFRightContainer],
 	Tournament.Stage.FINAL: [%FinalLeftContainer, %FinalRightContainer],
+	Tournament.Stage.LOCKED: [%WinnerContainer],
 	Tournament.Stage.SECRET: [%FinalLeftContainer, %FinalRightContainer],
 	Tournament.Stage.COMPLETE: [%WinnerContainer],
 }
@@ -27,6 +29,8 @@ func _ready() -> void:
 		MusicPlayer.stop()
 		#MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
 		GameManager.mars_unlocked = true
+	elif tournament.current_stage == Tournament.Stage.LOCKED:
+		MusicPlayer.stop()
 	elif tournament.current_stage == Tournament.Stage.SECRET:
 		#MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
 		GameManager.show_mars_flag = true
@@ -35,7 +39,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if KeyUtiles.is_action_just_press(Player.ControlScheme.P1, KeyUtiles.Action.SHOOT):
 		if tournament.current_stage < Tournament.Stage.COMPLETE:
-			transition_screen(SoccerGame.ScreenType.IN_GAME, screen_data)
+			if tournament.current_stage == Tournament.Stage.LOCKED:
+				transition_screen(SoccerGame.ScreenType.VICTORY, screen_data)
+			else:
+				transition_screen(SoccerGame.ScreenType.IN_GAME, screen_data)
 		else:
 			transition_screen(SoccerGame.ScreenType.VICTORY, screen_data)
 		SoundPlayer.play(SoundPlayer.Sound.UI_SELECT)
@@ -44,15 +51,19 @@ func refresh_brackets() -> void:
 	for stage in range(tournament.current_stage + 1):
 		if stage == tournament.Stage.FINAL and tournament.current_stage == tournament.Stage.SECRET:
 			pass
+		elif stage == tournament.Stage.LOCKED and tournament.current_stage == tournament.Stage.SECRET:
+			pass
 		else: 
 			refresh_bracket_stage(stage)
 
 func refresh_bracket_stage(stage: Tournament.Stage) -> void:
 	var flag_nodes := get_flag_nodes_for_stage(stage)
 	stage_texture.texture = STAGE_TEXTURES.get(stage)
-	if stage < Tournament.Stage.COMPLETE:
+	if stage == Tournament.Stage.LOCKED:
+		flag_nodes[0].texture = FlagHelper.get_texture("MARS")
+	elif stage < Tournament.Stage.COMPLETE:
 		var matches : Array = tournament.matches[stage]
-		assert(flag_nodes.size() == 2 * matches.size())
+		assert(flag_nodes.size() == 2 * matches.size()) 
 		for i in range(matches.size()):
 			var current_match : Match = matches[i]
 			var flag_home : BracketFlag = flag_nodes[i * 2]

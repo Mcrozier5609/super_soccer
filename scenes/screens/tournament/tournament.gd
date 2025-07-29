@@ -1,12 +1,13 @@
 class_name Tournament
 
-enum Stage {QUARTER_FINALS, SEMI_FINALS, FINAL, SECRET, COMPLETE}
+enum Stage {QUARTER_FINALS, SEMI_FINALS, FINAL, LOCKED, SECRET, COMPLETE}
 
 var current_stage : Stage = Stage.QUARTER_FINALS
 var matches := {
 	Stage.QUARTER_FINALS: [],
 	Stage.SEMI_FINALS: [],
 	Stage.FINAL: [],
+	Stage.LOCKED: [],
 	Stage.SECRET: [],
 }
 
@@ -27,10 +28,14 @@ func create_bracket(stage: Stage, countries: Array[String]) -> void:
 
 func advance() -> void:
 	if current_stage < Stage.COMPLETE:
-		var stage_matches : Array = matches[current_stage]
+		var this_stage := current_stage
+		if current_stage == Stage.LOCKED:
+			this_stage = current_stage - 1 as Stage
+		var stage_matches : Array = matches[this_stage]
 		var stage_winners : Array[String] = []
 		for current_match : Match in stage_matches:
-			current_match.resolve()
+			if current_stage != Stage.LOCKED:
+				current_match.resolve()
 			stage_winners.append(current_match.winner)
 		current_stage = current_stage + 1 as Stage
 		if current_stage == Stage.COMPLETE:
