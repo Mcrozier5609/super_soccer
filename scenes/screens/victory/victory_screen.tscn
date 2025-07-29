@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://0tadhn42s7h"]
+[gd_scene load_steps=13 format=3 uid="uid://0tadhn42s7h"]
 
 [ext_resource type="Script" uid="uid://bd8huv27d0cli" path="res://scenes/screens/victory/victory_screen.gd" id="1_7u2gp"]
 [ext_resource type="Shader" uid="uid://cs0eg2qb6sgjn" path="res://shaders/victory_shader.gdshader" id="2_0j1f7"]
-[ext_resource type="Texture2D" uid="uid://c17ff7cp3t2cg" path="res://assets/art/ui/victory/soccer_winners_palette.png" id="2_imokr"]
 [ext_resource type="Texture2D" uid="uid://bjbm4udqlxlvf" path="res://assets/art/palettes/skin-colors-palette.png" id="3_epl50"]
 [ext_resource type="Texture2D" uid="uid://8o7d86icpvl2" path="res://assets/art/palettes/teams-color-palette-new.png" id="4_6qbeg"]
 [ext_resource type="Texture2D" uid="uid://bh2a5e0huyt4c" path="res://assets/art/palettes/victory_skin_palette.png" id="5_6qbeg"]
+[ext_resource type="Texture2D" uid="uid://usjkjh3lm1r" path="res://assets/art/ui/victory/soccer_winners_280_180.png" id="6_6qbeg"]
+[ext_resource type="Texture2D" uid="uid://bak0n8hsdqaol" path="res://assets/art/particles/confetti_particle.png" id="7_d1yo1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_80alk"]
 shader = ExtResource("2_0j1f7")
@@ -15,14 +16,70 @@ shader_parameter/victory_palette = ExtResource("5_6qbeg")
 shader_parameter/teams_colors = PackedInt32Array(0, 0)
 shader_parameter/skin_colors = PackedInt32Array(0, 0, 0, 0, 0, 0)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d1yo1"]
+particles_animation = true
+particles_anim_h_frames = 11
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_giwwc"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, -12.1348), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mfrlo"]
+curve = SubResource("Curve_giwwc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_glg7j"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+angle_curve = SubResource("CurveTexture_mfrlo")
+initial_velocity_min = 12.99
+initial_velocity_max = 74.79
+angular_velocity_min = 56.63
+angular_velocity_max = 153.71
+gravity = Vector3(0, 40, 0)
+anim_offset_max = 1.0
+
 [node name="VictoryScreen" type="Node"]
 script = ExtResource("1_7u2gp")
 
 [node name="WinnerBackground" type="TextureRect" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_80alk")
-offset_left = 5.0
-offset_right = 185.0
-offset_bottom = 120.0
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_imokr")
+offset_right = 280.0
+offset_bottom = 180.0
+texture = ExtResource("6_6qbeg")
+
+[node name="confetti_root_1" type="Node2D" parent="."]
+position = Vector2(-27, 30.335)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="confetti_root_1"]
+material = SubResource("CanvasItemMaterial_d1yo1")
+amount = 15
+texture = ExtResource("7_d1yo1")
+lifetime = 3.76
+process_material = SubResource("ParticleProcessMaterial_glg7j")
+
+[node name="confetti_root_2" type="Node2D" parent="."]
+position = Vector2(81, -12)
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="confetti_root_2"]
+material = SubResource("CanvasItemMaterial_d1yo1")
+amount = 15
+texture = ExtResource("7_d1yo1")
+lifetime = 3.76
+process_material = SubResource("ParticleProcessMaterial_glg7j")
+
+[node name="confetti_root_3" type="Node2D" parent="."]
+position = Vector2(195, -12)
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="confetti_root_3"]
+material = SubResource("CanvasItemMaterial_d1yo1")
+amount = 15
+texture = ExtResource("7_d1yo1")
+lifetime = 3.76
+process_material = SubResource("ParticleProcessMaterial_glg7j")

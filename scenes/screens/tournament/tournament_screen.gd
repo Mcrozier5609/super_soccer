@@ -5,6 +5,7 @@ const STAGE_TEXTURES := {
 	Tournament.Stage.QUARTER_FINALS: preload("res://assets/art/ui/teamselection/quarters-label.png"),
 	Tournament.Stage.SEMI_FINALS: preload("res://assets/art/ui/teamselection/semis-label.png"),
 	Tournament.Stage.FINAL: preload("res://assets/art/ui/teamselection/finals-label.png"),
+	Tournament.Stage.SECRET: preload("res://assets/art/ui/teamselection/secret-label.png"),
 	Tournament.Stage.COMPLETE: preload("res://assets/art/ui/teamselection/winner-label.png"),
 }
 
@@ -23,10 +24,11 @@ var tournament : Tournament = null
 func _ready() -> void:
 	tournament = screen_data.tournament
 	if tournament.current_stage == Tournament.Stage.COMPLETE:
-		MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
+		MusicPlayer.stop()
+		#MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
 		GameManager.mars_unlocked = true
 	elif tournament.current_stage == Tournament.Stage.SECRET:
-		MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
+		#MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
 		GameManager.show_mars_flag = true
 	refresh_brackets()
 
@@ -35,7 +37,7 @@ func _process(_delta: float) -> void:
 		if tournament.current_stage < Tournament.Stage.COMPLETE:
 			transition_screen(SoccerGame.ScreenType.IN_GAME, screen_data)
 		else:
-			transition_screen(SoccerGame.ScreenType.MAIN_MENU)
+			transition_screen(SoccerGame.ScreenType.VICTORY, screen_data)
 		SoundPlayer.play(SoundPlayer.Sound.UI_SELECT)
 
 func refresh_brackets() -> void:

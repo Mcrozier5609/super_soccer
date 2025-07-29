@@ -1,7 +1,7 @@
 class_name SoccerGame
 extends Node
 
-enum ScreenType {MAIN_MENU, TEAM_SELECTION, TOURNAMENT, IN_GAME}
+enum ScreenType {MAIN_MENU, TEAM_SELECTION, TOURNAMENT, IN_GAME, VICTORY}
 
 var current_screen : Screen = null
 var screen_factory := ScreenFactory.new()

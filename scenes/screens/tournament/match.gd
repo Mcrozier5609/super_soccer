@@ -6,6 +6,7 @@ var goals_home : int
 var goals_away : int
 var final_score : String
 var winner : String
+var loser : String
 
 func _init(team_home: String, team_away: String) -> void:
 	country_home = team_home
@@ -26,6 +27,7 @@ func increase_score(country_scored_on: String) -> void:
 
 func update_match_info() -> void:
 	winner = country_home if goals_home > goals_away else country_away
+	loser = country_home if goals_home < goals_away else country_away
 	final_score = "%d - %d" % [max(goals_home, goals_away), min(goals_home, goals_away)]
 
 func resolve() -> void:
