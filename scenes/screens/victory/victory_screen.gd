@@ -17,6 +17,7 @@ const TIME_UNTIL_ANIMATION_START := 4000  # 4 seconds to line up with music
 const WAIT_DURATION := 8000 # Wait 6 seconds to transition cutscene if a key wasn't pressed
 
 func _ready() -> void:
+	var do_skin := true
 	shadow.position.x = -288.0
 	start_time = Time.get_ticks_msec()
 	tournament = screen_data.tournament
@@ -28,9 +29,13 @@ func _ready() -> void:
 		screen_data.tournament.advance()
 		MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)
 	else:
+		if "MARS" in GameManager.player_setup:
+			var alien_texture = load("res://assets/art/ui/victory/alien_winners.png")
+			winner_background.texture = alien_texture
+			do_skin = false
 		locked = false
 		MusicPlayer.play_music(MusicPlayer.Music.WIN, 0.5)
-	set_shader_properties()
+	set_shader_properties(do_skin)
 
 func _process(_delta: float) -> void:
 	if locked and not played_animation and Time.get_ticks_msec() - start_time > TIME_UNTIL_ANIMATION_START:
@@ -45,7 +50,7 @@ func _process(_delta: float) -> void:
 	elif locked and Time.get_ticks_msec() - start_time > WAIT_DURATION:
 		transition_screen(SoccerGame.ScreenType.ALIEN_CUTSCENE, screen_data)
 
-func set_shader_properties() -> void:
+func set_shader_properties(use_skin_shader: bool) -> void:
 	# Set jersey colors
 	var this_stage := tournament.current_stage
 	if this_stage == Tournament.Stage.SECRET or (this_stage == Tournament.Stage.COMPLETE and GameManager.mars_unlocked):
@@ -60,10 +65,11 @@ func set_shader_properties() -> void:
 	winner_background.material.set_shader_parameter("teams_colors", final_countries)
 
 	# Set skin colors
-	var players := DataLoader.get_squad(final_match.winner)
-	var skin_colors : Array[int]
-	for i in players.size():
-		var player_data := players[i] as PlayerResource
-		skin_colors.append(player_data.skin_color)
-	winner_background.material.set_shader_parameter("skin_colors", skin_colors)
+	if use_skin_shader:
+		var players := DataLoader.get_squad(final_match.winner)
+		var skin_colors : Array[int]
+		for i in players.size():
+			var player_data := players[i] as PlayerResource
+			skin_colors.append(player_data.skin_color)
+		winner_background.material.set_shader_parameter("skin_colors", skin_colors)
 	
