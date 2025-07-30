@@ -4,6 +4,9 @@ extends Screen
 @onready var winner_background := %WinnerBackground
 @onready var shadow_enter := %shadow_enter
 @onready var shadow := %shadow
+@onready var particle_1 := %particle_1
+@onready var particle_2 := %particle_2
+@onready var particle_3 := %particle_3
 
 var tournament : Tournament
 var start_time := Time.get_ticks_msec()
@@ -18,6 +21,9 @@ func _ready() -> void:
 	start_time = Time.get_ticks_msec()
 	tournament = screen_data.tournament
 	if tournament.current_stage == Tournament.Stage.LOCKED:
+		particle_1.emitting = false
+		particle_2.emitting = false
+		particle_3.emitting = false
 		locked = true
 		screen_data.tournament.advance()
 		MusicPlayer.play_music(MusicPlayer.Music.FAKE_WIN, 0.5)

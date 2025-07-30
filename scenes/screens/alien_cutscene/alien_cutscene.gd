@@ -22,6 +22,8 @@ const ALIEN_CLOSEUP_START := 11000
 const FINISH_TIME := 17000
 
 func _ready() -> void:
+	MusicPlayer.stop()
+	MusicPlayer.play_music(MusicPlayer.Music.ALIEN_CUTSCENE, 0.5)
 	start_time = Time.get_ticks_msec()
 
 func _process(_delta: float) -> void:

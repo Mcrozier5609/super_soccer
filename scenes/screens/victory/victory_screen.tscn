@@ -94,14 +94,15 @@ texture = ExtResource("6_6qbeg")
 [node name="shadow" type="TextureRect" parent="."]
 unique_name_in_owner = true
 modulate = Color(0, 0, 0, 0.784314)
-offset_left = -280.0
+offset_right = 280.0
 offset_bottom = 180.0
 texture = ExtResource("7_giwwc")
 
 [node name="confetti_root_1" type="Node2D" parent="."]
 position = Vector2(-27, 30.335)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="confetti_root_1"]
+[node name="particle_1" type="GPUParticles2D" parent="confetti_root_1"]
+unique_name_in_owner = true
 material = SubResource("CanvasItemMaterial_d1yo1")
 amount = 15
 texture = ExtResource("7_d1yo1")
@@ -111,7 +112,8 @@ process_material = SubResource("ParticleProcessMaterial_glg7j")
 [node name="confetti_root_2" type="Node2D" parent="."]
 position = Vector2(81, -12)
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="confetti_root_2"]
+[node name="particle_2" type="GPUParticles2D" parent="confetti_root_2"]
+unique_name_in_owner = true
 material = SubResource("CanvasItemMaterial_d1yo1")
 amount = 15
 texture = ExtResource("7_d1yo1")
@@ -121,7 +123,8 @@ process_material = SubResource("ParticleProcessMaterial_glg7j")
 [node name="confetti_root_3" type="Node2D" parent="."]
 position = Vector2(195, -12)
 
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="confetti_root_3"]
+[node name="particle_3" type="GPUParticles2D" parent="confetti_root_3"]
+unique_name_in_owner = true
 material = SubResource("CanvasItemMaterial_d1yo1")
 amount = 15
 texture = ExtResource("7_d1yo1")

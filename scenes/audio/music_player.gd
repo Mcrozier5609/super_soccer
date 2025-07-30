@@ -1,6 +1,6 @@
 extends AudioStreamPlayer
 
-enum Music {NONE, GAMEPLAY, MENU, TOURNAMENT, WIN, FAKE_WIN, ALIEN_GAMEPLAY}
+enum Music {NONE, GAMEPLAY, MENU, TOURNAMENT, WIN, FAKE_WIN, ALIEN_GAMEPLAY, ALIEN_CUTSCENE}
 
 const MUSIC_MAP : Dictionary[Music, AudioStream] = {
 	Music.GAMEPLAY: preload("res://assets/music/gameplay.mp3"),
@@ -9,6 +9,7 @@ const MUSIC_MAP : Dictionary[Music, AudioStream] = {
 	Music.WIN: preload("res://assets/music/soccer_win_mp3.mp3"),
 	Music.FAKE_WIN: preload("res://assets/music/soccer_win_mystery_mp3.mp3"),
 	Music.ALIEN_GAMEPLAY: preload("res://assets/music/gameplay.mp3"),
+	Music.ALIEN_CUTSCENE: preload("res://assets/music/alien_cuscene_mp3.mp3"),
 }
 
 var current_music := Music.NONE
