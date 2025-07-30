@@ -36,7 +36,7 @@ const TACKLE_CELEBRATION_TIME := 1000.0
 const TACKLE_SPRITE_DWELL_TIME := 50.0
 const MIN_CROWD_NOISE := 0.5
 const MAX_CROWD_NOISE := 1.0
-const TACKLE_CROWD_NOISE := 4.0
+const TACKLE_CROWD_NOISE := 2.0
 
 func _init() -> void:
 	GameEvents.team_reset.connect(on_team_reset.bind())

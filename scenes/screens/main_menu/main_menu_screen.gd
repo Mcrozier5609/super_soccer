@@ -20,6 +20,9 @@ func _process(_delta: float) -> void:
 			change_selected_index(current_selected_index + 1)
 		elif KeyUtiles.is_action_just_press(Player.ControlScheme.P1, KeyUtiles.Action.SHOOT):
 			submit_selection()
+		elif KeyUtiles.is_action_just_press(Player.ControlScheme.P1, KeyUtiles.Action.UNLOCK):
+			SoundPlayer.play(SoundPlayer.Sound.CROWD_WOOSH)
+			GameManager.mars_unlocked = true
 
 func refresh_ui() -> void:
 	for i in range(selectable_menu_nodes.size()):
