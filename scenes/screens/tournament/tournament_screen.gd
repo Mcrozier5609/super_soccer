@@ -51,8 +51,12 @@ func refresh_brackets() -> void:
 	for stage in range(tournament.current_stage + 1):
 		if stage == tournament.Stage.FINAL and tournament.current_stage == tournament.Stage.SECRET:
 			pass
-		elif stage == tournament.Stage.LOCKED and tournament.current_stage == tournament.Stage.SECRET:
-			pass
+		elif stage == tournament.Stage.LOCKED and (tournament.current_stage == tournament.Stage.COMPLETE \
+		or tournament.current_stage == tournament.Stage.SECRET):
+				pass
+		elif stage == tournament.Stage.SECRET and tournament.current_stage == tournament.Stage.COMPLETE \
+		and GameManager.mars_unlocked:
+				pass
 		else: 
 			refresh_bracket_stage(stage)
 

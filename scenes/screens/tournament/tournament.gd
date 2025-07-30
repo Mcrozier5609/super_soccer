@@ -12,14 +12,23 @@ var matches := {
 }
 
 var winner := ""
+var country_max := 10
+var excluded_max := 1
 
 func _init() -> void:
-	var countries := DataLoader.get_countries().slice(1, 10)
+	if GameManager.mars_unlocked:
+		country_max += 1
+		excluded_max += 1
+	var countries := DataLoader.get_countries().slice(1, country_max)
 	countries.shuffle()
-	if countries[-1] != GameManager.player_setup[0]:
-		countries.pop_at(-1)
-	else:
-		countries.pop_at(-2)
+	var num_excluded := 0
+	var country_index := 0
+	while num_excluded < excluded_max:
+		if countries[0] != GameManager.player_setup[0]:
+			countries.pop_at(country_index)
+			num_excluded += 1
+		else:
+			country_index += 1
 	create_bracket(Stage.QUARTER_FINALS, countries)
 
 func create_bracket(stage: Stage, countries: Array[String]) -> void:
@@ -38,6 +47,8 @@ func advance() -> void:
 				current_match.resolve()
 			stage_winners.append(current_match.winner)
 		current_stage = current_stage + 1 as Stage
+		if current_stage == Stage.LOCKED and GameManager.mars_unlocked:
+			current_stage = Stage.COMPLETE
 		if current_stage == Stage.COMPLETE:
 			winner = stage_winners[0]
 		else:

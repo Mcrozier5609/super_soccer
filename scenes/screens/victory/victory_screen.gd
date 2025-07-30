@@ -42,7 +42,7 @@ func _process(_delta: float) -> void:
 func set_shader_properties() -> void:
 	# Set jersey colors
 	var this_stage := tournament.current_stage
-	if this_stage == Tournament.Stage.SECRET:
+	if this_stage == Tournament.Stage.SECRET or (this_stage == Tournament.Stage.COMPLETE and GameManager.mars_unlocked):
 		this_stage = Tournament.Stage.LOCKED
 	var final_match : Match = tournament.matches[this_stage - 1][0]
 	var countries = DataLoader.get_countries()
