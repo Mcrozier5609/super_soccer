@@ -5,7 +5,10 @@ extends Screen
 
 
 func _enter_tree() -> void:
-	super._enter_tree()
+	if GameManager.current_matchup.country_home == "MARS" or GameManager.current_matchup.country_away == "MARS":
+		MusicPlayer.play_music(MusicPlayer.Music.ALIEN_GAMEPLAY)
+	else:
+		MusicPlayer.play_music(MusicPlayer.Music.GAMEPLAY, 0.3)
 	GameEvents.game_over.connect(on_game_over.bind())
 	GameManager.start_game()
 	SoundPlayer.crowd_player.play()

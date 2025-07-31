@@ -3,7 +3,7 @@ extends AudioStreamPlayer
 enum Music {NONE, GAMEPLAY, MENU, TOURNAMENT, WIN, FAKE_WIN, ALIEN_GAMEPLAY, ALIEN_CUTSCENE}
 
 const MUSIC_MAP : Dictionary[Music, AudioStream] = {
-	Music.GAMEPLAY: preload("res://assets/music/gameplay.mp3"),
+	Music.GAMEPLAY: preload("res://assets/music/soccer_gameplay_mp3.mp3"),
 	Music.MENU: preload("res://assets/music/ole_ole_ole_mps.mp3"),
 	Music.TOURNAMENT: preload("res://assets/music/soccer_menu_loop.mp3"),
 	Music.WIN: preload("res://assets/music/soccer_win_mp3.mp3"),
