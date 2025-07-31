@@ -11,7 +11,8 @@ func _process(_delta: float) -> void:
 
 func handle_human_movement() -> void:
 	var direction := KeyUtiles.get_input_vector(player.control_scheme)
-	player.velocity = direction * player.speed
+	var player_speed = player.carry_speed if player.has_ball() else player.speed
+	player.velocity = direction * player_speed
 	if player.velocity != Vector2.ZERO:
 		teammate_detection_area.rotation = player.velocity.angle()
 

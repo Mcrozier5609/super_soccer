@@ -30,7 +30,7 @@ resource_local_to_scene = true
 shader = ExtResource("2_atpat")
 shader_parameter/team_palette = ExtResource("4_6eyoc")
 shader_parameter/skin_palette = ExtResource("3_6eyoc")
-shader_parameter/team_color = 0
+shader_parameter/team_color = 2
 shader_parameter/skin_color = 0
 
 [sub_resource type="Animation" id="Animation_76oj4"]
