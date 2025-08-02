@@ -8,10 +8,9 @@ const MUSIC_MAP : Dictionary[Music, AudioStream] = {
 	Music.TOURNAMENT: preload("res://assets/music/soccer_menu_loop.mp3"),
 	Music.WIN: preload("res://assets/music/soccer_win_mp3.mp3"),
 	Music.FAKE_WIN: preload("res://assets/music/soccer_win_mystery_mp3.mp3"),
-	Music.ALIEN_GAMEPLAY: preload("res://assets/music/gameplay.mp3"),
+	Music.ALIEN_GAMEPLAY: preload("res://assets/music/alien_gameplay_mp3.mp3"),
 	Music.ALIEN_CUTSCENE: preload("res://assets/music/alien_cuscene_mp3.mp3"),
 }
-
 var current_music := Music.NONE
 
 func _ready() -> void:

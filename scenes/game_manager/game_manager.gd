@@ -18,6 +18,7 @@ var selector_coord := Vector2i.ZERO
 
 func _init() -> void:
 	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"), 0.3)
 
 func _ready() -> void:
 	GameEvents.impact_received.connect(on_impact_received.bind())

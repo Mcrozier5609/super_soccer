@@ -66,10 +66,10 @@ func _process(delta: float) -> void:
 		SoundPlayer.play(SoundPlayer.Sound.CROWD_WOOSH, 0.5)
 		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
 			tackled = false
-	if scored:
-		crowd_noise_lvl = TACKLE_CROWD_NOISE
-		if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
-			scored = false
+		if scored:
+			crowd_noise_lvl = TACKLE_CROWD_NOISE
+			if Time.get_ticks_msec() - time_at_tackle > TACKLE_CELEBRATION_TIME:
+				scored = false
 	else:
 		var goal_position := 0.0
 		var center_offset := 0.0
